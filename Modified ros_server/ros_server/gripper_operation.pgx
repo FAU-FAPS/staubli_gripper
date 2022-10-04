@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="gripper_operation" access="public">
+    <Locals>
+      <Local name="l_nByte" type="num" xsi:type="array" size="1" />
+      <Local name="l_nIndex" type="num" xsi:type="array" size="1" />
+      <Local name="l_nRetVal" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // initialise TCP/IP parameters
+  l_nRetVal=sioCtrl(gripper_sio,"timeout",-1)
+  if (l_nRetVal!=0)
+    popUpMsg("Error while setting consumer timeout")
+  endIf
+
+  
+  clearBuffer(gripper_sio)
+ 
+  l_nIndex=0
+ 
+  userPage("uxMonitor")
+  userPageSet("uxMonitor", "msg1", "innerHTML", "not connected")
+  while(true)
+
+    l_nIndex=sioGet(gripper_sio,l_nByte)
+    if(l_nIndex == 1)
+      userPageSet("uxMonitor", "msg1", "innerHTML", "connected")
+      
+      if(l_nByte == 49)
+        // for sending '1' from TCP client
+        // gripper close
+        v2_clsMid = true
+        v2_enable = true
+        userPageSet("uxMonitor", "msg2", "innerHTML", "close")
+        
+      elseIf(l_nByte == 50)
+        // for sending '2' from TCP client
+        // gripper open
+        userPageSet("uxMonitor", "msg2", "innerHTML", "open")
+        v2_clsMid = false
+        v2_enable = true
+        //delay(5)
+        //v2_enable = false
+      //else
+        
+        //userPageSet("uxMonitor", "msg2", "innerHTML", "Unchanged")
+        // for sending other then '1' or '2'
+        // no change
+      endIf
+      delay(1)
+      userPageSet("uxMonitor", "msg1", "innerHTML", "disconnected")
+    endIf
+  endWhile
+  
+end]]></Code>
+  </Program>
+</Programs>

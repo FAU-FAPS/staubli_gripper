@@ -1,0 +1,66 @@
+﻿{
+  "programs": [
+    {
+      "mode": 3,
+      "name": "start",
+      "nodes": [
+        {
+          "start": 1880,
+          "end": 1968,
+          "isCollapsed": false
+        },
+        {
+          "start": 2054,
+          "end": 2245,
+          "isCollapsed": false
+        },
+        {
+          "start": 2075,
+          "end": 2237,
+          "isCollapsed": false
+        },
+        {
+          "start": 2104,
+          "end": 2169,
+          "isCollapsed": false
+        },
+        {
+          "start": 2174,
+          "end": 2227,
+          "isCollapsed": false
+        }
+      ]
+    },
+    {
+      "mode": 3,
+      "name": "gripper_operation",
+      "nodes": [
+        {
+          "start": 88,
+          "end": 166,
+          "isCollapsed": false
+        },
+        {
+          "start": 306,
+          "end": 1195,
+          "isCollapsed": false
+        },
+        {
+          "start": 364,
+          "end": 1184,
+          "isCollapsed": false
+        },
+        {
+          "start": 460,
+          "end": 1091,
+          "isCollapsed": false
+        },
+        {
+          "start": 674,
+          "end": 1079,
+          "isCollapsed": false
+        }
+      ]
+    }
+  ]
+}

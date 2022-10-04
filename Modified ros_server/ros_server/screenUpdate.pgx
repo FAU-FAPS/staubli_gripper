@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2" >
+  <Program name="screenUpdate" access="public" >
+    <Locals>
+      <Local name="l_nElems" type="num" xsi:type="array" size="1" />
+      <Local name="l_nExecStatus" type="num" xsi:type="array" size="1" />
+      <Local name="l_nKey" type="num" xsi:type="array" size="1" />
+    </Locals>
+    <Code><![CDATA[begin
+  // Copyright (c) 2016, Ocado Technology - Robotics Research Team
+  //
+  // Licensed under the Apache License, Version 2.0 (the "License");
+  // you may not use this file except in compliance with the License.
+  // You may obtain a copy of the License at
+  //
+  //     http://www.apache.org/licenses/LICENSE-2.0
+  //
+  // Unless required by applicable law or agreed to in writing, software
+  // distributed under the License is distributed on an "AS IS" BASIS,
+  // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  // See the License for the specific language governing permissions and
+  // limitations under the License.
+
+
+  userPage("uxMonitor")
+
+  while (true)
+    // TODO: Bind to a button instead of this (now disabled) key binding
+    // toggle velocity overwrite upon release of F1 key
+    l_nKey=0
+    call libQueueFuncs:getNumElems(qMoveBuffer,l_nElems)
+    if (l_nKey==277 and bOverwriteVel==false)
+      if (l_nElems==0)
+        bOverwriteVel=true
+      else
+        userPageAlert("Motion buffer not empty; cannot enable V/OW")
+      endIf
+    elseIf (l_nKey==278 and bOverwriteVel==true)
+      if (l_nElems==0)
+        bOverwriteVel=false
+      else
+        userPageAlert("Motion buffer not empty; cannot disable V/OW")
+      endIf
+    endIf
+
+    // update connection status on port 11000
+    switch nInConnFlag
+      case -1
+        userPageSet("uxMonitor","lblMotionState","innerHTML","connection lost")
+      break
+      case 0
+        userPageSet("uxMonitor","lblMotionState","innerHTML","not connected")
+      break
+      case 1
+        userPageSet("uxMonitor","lblMotionState","innerHTML","connected")
+      break
+      default
+        userPageSet("uxMonitor","lblMotionState","innerHTML","not connected")
+      break
+    endSwitch
+
+    // update connection status on port 11002
+    switch nOutConnFlag
+      case -1
+        userPageSet("uxMonitor","lblFeedbackState","innerHTML","connection lost")
+      break
+      case 0
+        userPageSet("uxMonitor","lblFeedbackState","innerHTML","not connected")
+      break
+      case 1
+        userPageSet("uxMonitor","lblFeedbackState","innerHTML","connected")
+      break
+      default
+        userPageSet("uxMonitor","lblFeedbackState","innerHTML","not connected")
+      break
+    endSwitch
+
+    // update trajectory buffer size
+    call libQueueFuncs:getNumElems(qTrajPtBuffer,l_nElems)
+
+    userPageSet("uxMonitor","lblTrajectoryBuffer","innerHTML",l_nElems)
+
+    // also print number of points popped from buffer
+    userPageSet("uxMonitor","lblTrajectoryBufferPopped","innerHTML",nPtsPopped)
+
+    // do the same for move buffer
+    call libQueueFuncs:getNumElems(qMoveBuffer,l_nElems)
+
+    userPageSet("uxMonitor","lblMotionBuffer","innerHTML",l_nElems)
+
+    // also print number of points popped from buffer
+    userPageSet("uxMonitor","lblMotionBufferPopped","innerHTML",nMovePts)
+
+    // display velocity overwrite status
+    if (bOverwriteVel==true)
+      userPageSet("uxMonitor","lblVelocityOverwrite","innerHTML","enabled")
+    else
+      userPageSet("uxMonitor","lblVelocityOverwrite","innerHTML","disabled")
+    endIf
+
+    // display nMoveId and nMotionProgress
+    userPageSet("uxMonitor","lblMoveId","innerHTML",nMoveId)
+    userPageSet("uxMonitor","lblMotionProgress","innerHTML",nMotionProgress)
+
+    // display time between valid trajectory point received and ACK sent
+    userPageSet("uxMonitor","lblHeaderTime","innerHTML",toString(".4",nHeaderTime))
+    userPageSet("uxMonitor","lblElapsedTime","innerHTML",toString(".4",nElapsedTime))
+
+    // sequence task
+    //delay(0)
+    delay(0.5)
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>
