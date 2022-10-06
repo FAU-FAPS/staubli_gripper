@@ -79,8 +79,8 @@ From your PC you can send data to the robot controller using a python program. F
 ## 6. Write your own VAL3 code and integrate it with [ros-industrial staubli VAL3](https://github.com/ros-industrial/staubli_val3_driver/tree/master/staubli_val3_driver/val3) code 
 You can do this in two ways:
 
-* [Directly changing the VAL3 code](https://github.com/FAU-FAPS/staubli_gripper/tree/main/Integration_using_VAL3_program)
-* [Using Staubli Robotics Suite (SRS)](https://github.com/FAU-FAPS/staubli_gripper/tree/main/Integration_using_Staubli_Robotics_Suite)
+* [Directly changing the VAL3 code](https://github.com/FAU-FAPS/staubli_gripper/tree/master/Integration_using_VAL3_program)
+* [Using Staubli Robotics Suite (SRS)](https://github.com/FAU-FAPS/staubli_gripper/tree/master/Integration_using_Staubli_Robotics_Suite)
 
 <a name="7"/><br/>
 ## 7. Transfer Modified ros-server VAL3 code to robot controller using FTP
@@ -97,7 +97,7 @@ You can do this in two ways:
 
 <a name="8"/><br/>
 ## 8. Send Gripper control command from your PC using Python code
-* Download [raptor_gripper.py](https://github.com/FAU-FAPS/staubli_gripper/blob/main/raptor_gripper.py) in your PC
+* Download [raptor_gripper.py](https://github.com/FAU-FAPS/staubli_gripper/blob/master/raptor_gripper.py) in your PC
 * For gripper operation: 
 ```python
 import raptor_gripper
