@@ -1,6 +1,6 @@
 # Write your own VAL3 Program (Demo_Gripper)
 
-A simple demonstration on how to write a new VAL3 program for gripper control and integrate it with [ros-industrial staubli VAL3 driver](https://github.com/ros-industrial/staubli_val3_driver/tree/master/staubli_val3_driver/val3) is illustrated here. We tested this with Staubli TX2-60L robot (CS9 controller). Our robot has two Closed at mid position solenoid valves (EV1 and EV2). A new TCP server socket (Name: Gripper_socket, Port: 5000) has been created using the emulator. The relation between digital output and pneumatic output is shown in [Table 1](https://github.com/FAU-FAPS/staubli_gripper/blob/main/README.md). 
+A simple demonstration on how to write a new VAL3 program for gripper control and integrate it with [ros-industrial staubli VAL3 driver](https://github.com/ros-industrial/staubli_val3_driver/tree/master/staubli_val3_driver/val3) is illustrated here. We tested this with Staubli TX2-60L robot (CS9 controller). Our robot has two Closed at mid position solenoid valves (EV1 and EV2). A new TCP server socket (Name: Gripper_socket, Port: 5000) has been created using the emulator. The relation between digital output and pneumatic output is shown in [Table 1](https://github.com/FAU-FAPS/staubli_gripper/blob/master/README.md). 
 
 The steps are the following : 
 
@@ -11,7 +11,7 @@ The steps are the following :
 | -------------| ---------| -------------- |------------------------------ |------------------------------ | ------ |
 |02| 0 | 1 | close | open | open |
 |04| 1  | 1 | open  | close | close |
-- We add this global variable in the [**ros_server.dtx**](https://github.com/FAU-FAPS/staubli_gripper/blob/main/Modified%20ros_server/ros_server/ros_server.dtx) file. 
+- We add this global variable in the [**ros_server.dtx**](https://github.com/FAU-FAPS/staubli_gripper/blob/master/Modified%20ros_server/ros_server/ros_server.dtx) file. 
 ```python
     <Data name="gripper_sio" access="public" xsi:type="array" type="sio" size="1">
       <Value key="0" link="Socket\Gripper_socket" />
@@ -29,9 +29,9 @@ Here, `link` is an important factor. You will find this in emulator: <br/>
 
 <img src="/images/Capture4.PNG" width="350"/> <img src="/images/Capture5.PNG" width="350"/>
 
-- Create a new .pgx file inside the ros_server folder [(**gripper_operation.pgx**)](https://github.com/FAU-FAPS/staubli_gripper/blob/main/Modified%20ros_server/ros_server/gripper_operation.pgx). Write the program inside it. Write the local variables in the front.
+- Create a new .pgx file inside the ros_server folder [(**gripper_operation.pgx**)](https://github.com/FAU-FAPS/staubli_gripper/blob/master/Modified%20ros_server/ros_server/gripper_operation.pgx). Write the program inside it. Write the local variables in the front.
 
-- Now, integrate the newly created program in the ros-industrial staubli VAL3 driver. In **ros_Server**--> [**start.pgx**](https://github.com/FAU-FAPS/staubli_gripper/blob/main/Modified%20ros_server/ros_server/start.pgx)--> add the following lines to run the newly created program. 
+- Now, integrate the newly created program in the ros-industrial staubli VAL3 driver. In **ros_Server**--> [**start.pgx**](https://github.com/FAU-FAPS/staubli_gripper/blob/master/Modified%20ros_server/ros_server/start.pgx)--> add the following lines to run the newly created program. 
 ```python
 sGripperTaskName = "gripperTask"
 taskCreateSync sGripperTaskName, .02, bGripOverrun, gripper_operation()
